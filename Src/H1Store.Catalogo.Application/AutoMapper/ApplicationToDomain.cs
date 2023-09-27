@@ -18,7 +18,7 @@ namespace H1Store.Catalogo.Application.AutoMapper
 			   .ConstructUsing(q => new Produto(q.Codigo,q.Nome,q.Descricao,q.Ativo,q.Valor,q.DataCadastro,q.Imagem,q.QuantidadeEstoque));
 
 			CreateMap<NovoProdutoViewModel, Produto>()
-			   .ConstructUsing(q => new Produto( q.Nome, q.Descricao, q.Ativo, q.Valor, q.DataCadastro, q.Imagem, q.QuantidadeEstoque));
+			   .ConstructUsing(q => new Produto(0, q.Nome, q.Descricao, q.Ativo, q.Valor, q.DataCadastro, q.Imagem, q.QuantidadeEstoque));
 
 		}
 	}

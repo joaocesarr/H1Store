@@ -13,15 +13,20 @@ namespace H1Store.Catalogo.Data.Repository
 	{
 		private readonly string _produtoCaminhoArquivo;
 
+		#region - Construtores
 		public ProdutoRepository()
 		{
 			_produtoCaminhoArquivo = Path.Combine(Directory.GetCurrentDirectory(), "FileJsonData", "produto.json");
 		}
 
+		#endregion
+
+		#region - Funções
 		public void Adicionar(Produto produto)
 		{
-			List<Produto> produtos = new List<Produto>();
+			var produtos = LerProdutosDoArquivo();
 			int proximoCodigo = ObterProximoCodigoDisponivel();
+			produto.SetaCodigoProduto(proximoCodigo);
 			produtos.Add(produto);
 			EscreverProdutosNoArquivo(produtos);
 		}
@@ -41,20 +46,17 @@ namespace H1Store.Catalogo.Data.Repository
 			throw new NotImplementedException();
 		}
 
-		public Task<IEnumerable<Produto>> ObterTodos()
+		public IEnumerable<Produto> ObterTodos()
 		{
-			throw new NotImplementedException();
+			return LerProdutosDoArquivo();
 		}
+		#endregion
 
-
-		#region Métodos arquivo
+		#region - Métodos arquivo
 		private List<Produto> LerProdutosDoArquivo()
 		{
 			if (!System.IO.File.Exists(_produtoCaminhoArquivo))
-			{
 				return new List<Produto>();
-			}
-
 			string json = System.IO.File.ReadAllText(_produtoCaminhoArquivo);
 			return JsonConvert.DeserializeObject<List<Produto>>(json);
 		}
@@ -63,13 +65,9 @@ namespace H1Store.Catalogo.Data.Repository
 		{
 			List<Produto> produtos = LerProdutosDoArquivo();
 			if (produtos.Any())
-			{
 				return produtos.Max(p => p.Codigo) + 1;
-			}
 			else
-			{
 				return 1;
-			}
 		}
 
 		private void EscreverProdutosNoArquivo(List<Produto> produtos)

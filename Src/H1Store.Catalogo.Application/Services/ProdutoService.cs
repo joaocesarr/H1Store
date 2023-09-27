@@ -13,6 +13,7 @@ namespace H1Store.Catalogo.Application.Services
 {
 	public class ProdutoService : IProdutoService
 	{
+		#region - Construtores
 		private readonly IProdutoRepository _produtoRepository;
 		private IMapper _mapper;
 
@@ -21,7 +22,9 @@ namespace H1Store.Catalogo.Application.Services
 			_produtoRepository = produtoRepository;
 			_mapper = mapper;
 		}
+		#endregion
 
+		#region - Funções
 		public void Adicionar(NovoProdutoViewModel novoProdutoViewModel)
 		{
 			var novoProduto = _mapper.Map<Produto>(novoProdutoViewModel);
@@ -44,9 +47,10 @@ namespace H1Store.Catalogo.Application.Services
 			throw new NotImplementedException();
 		}
 
-		public Task<IEnumerable<ProdutoViewModel>> ObterTodos()
+		public IEnumerable<ProdutoViewModel> ObterTodos()
 		{
-			throw new NotImplementedException();
+			return _mapper.Map<IEnumerable<ProdutoViewModel>>(_produtoRepository.ObterTodos());
 		}
+		#endregion
 	}
 }

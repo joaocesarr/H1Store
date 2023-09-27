@@ -22,5 +22,12 @@ namespace H1Store.Catalogo.API.Controllers
 
 			return Ok();
 		}
+
+
+		[HttpGet(Name = "ObterTodos")]
+		public IActionResult Get()
+		{
+			return Ok(_produtoService.ObterTodos());
+		}
 	}
 }

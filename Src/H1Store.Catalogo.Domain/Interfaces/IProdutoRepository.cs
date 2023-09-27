@@ -9,7 +9,7 @@ namespace H1Store.Catalogo.Domain.Interfaces
 {
 	public interface IProdutoRepository
 	{
-		Task<IEnumerable<Produto>> ObterTodos();
+		IEnumerable<Produto> ObterTodos();
 		Task<Produto> ObterPorId(Guid id);
 		Task<IEnumerable<Produto>> ObterPorCategoria(int codigo);
 

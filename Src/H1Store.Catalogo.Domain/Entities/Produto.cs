@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace H1Store.Catalogo.Domain.Entities
@@ -11,18 +12,6 @@ namespace H1Store.Catalogo.Domain.Entities
 	{
 
 		#region 1 - Contrutores
-		public Produto( string nome, string descricao, bool ativo, decimal valor, DateTime dataCadastro, string imagem, int quantidadeEstoque)
-		{			
-			Nome = nome;
-			Descricao = descricao;
-			Ativo = ativo;
-			Valor = valor;
-			DataCadastro = dataCadastro;
-			Imagem = imagem;
-			QuantidadeEstoque = quantidadeEstoque;
-		}
-
-
 		public Produto(int codigo, string nome, string descricao, bool ativo, decimal valor, DateTime dataCadastro, string imagem, int quantidadeEstoque)
 		{
 			Codigo = codigo;
@@ -34,6 +23,8 @@ namespace H1Store.Catalogo.Domain.Entities
 			Imagem = imagem;
 			QuantidadeEstoque = quantidadeEstoque;
 		}
+
+
 		#endregion
 
 		#region 2 - Propriedades
@@ -54,14 +45,10 @@ namespace H1Store.Catalogo.Domain.Entities
 
 		public void Desativar() => Ativo = false;
 
-		public void AlterarDescricao(string descricao)
-		{
-			Descricao = descricao;
-		}
+		public void AlterarDescricao(string descricao) => Descricao = descricao;
 
 		public void DebitarEstoque(int quantidade)
 		{
-			if (quantidade < 0) quantidade *= -1;
 			if (!PossuiEstoque(quantidade)) throw new Exception("Estoque insuficiente");
 			QuantidadeEstoque -= quantidade;
 		}
@@ -73,6 +60,7 @@ namespace H1Store.Catalogo.Domain.Entities
 
 		public bool PossuiEstoque(int quantidade) => QuantidadeEstoque >= quantidade;
 
+		public void SetaCodigoProduto(int novocodigo) => Codigo = novocodigo;
 
 		#endregion
 	}
