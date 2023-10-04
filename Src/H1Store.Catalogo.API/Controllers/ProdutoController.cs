@@ -1,6 +1,8 @@
 ﻿using H1Store.Catalogo.Application.Interfaces;
 using H1Store.Catalogo.Application.ViewModels;
+using H1Store.Catalogo.Data.Providers.MongoDb.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace H1Store.Catalogo.API.Controllers
 {
@@ -9,7 +11,6 @@ namespace H1Store.Catalogo.API.Controllers
 	public class ProdutoController : ControllerBase
 	{
 		private readonly IProdutoService _produtoService;
-
 		public ProdutoController(IProdutoService produtoService)
 		{
 			_produtoService = produtoService;

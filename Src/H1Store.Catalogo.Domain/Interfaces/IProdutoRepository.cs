@@ -13,7 +13,7 @@ namespace H1Store.Catalogo.Domain.Interfaces
 		Task<Produto> ObterPorId(Guid id);
 		Task<IEnumerable<Produto>> ObterPorCategoria(int codigo);
 
-		void Adicionar(Produto produto);
+		Task Adicionar(Produto produto);
 		void Atualizar(Produto produto);
 	}
 }
