@@ -11,7 +11,7 @@ namespace H1Store.Catalogo.Data.Providers.MongoDb
 	{
 		public string CollectionName { get; }
 
-		public BsonCollectionAttribute(string collectionName)
+		public BsonCollectionAttribute(string collectionName) 
 		{
 			CollectionName = collectionName;
 		}

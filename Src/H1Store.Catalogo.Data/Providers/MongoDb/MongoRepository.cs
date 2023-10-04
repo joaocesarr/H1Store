@@ -16,7 +16,7 @@ namespace H1Store.Catalogo.Data.Providers.MongoDb
 	{
 		private readonly IMongoCollection<TDocument> _collection;
 
-		public MongoRepository(IMongoDbSettings settings)
+		 public MongoRepository(IMongoDbSettings settings)
 		{
 			var database = new MongoClient(settings.ConnectionString).GetDatabase(settings.DatabaseName);
 			_collection = database.GetCollection<TDocument>(GetCollectionName(typeof(TDocument)));

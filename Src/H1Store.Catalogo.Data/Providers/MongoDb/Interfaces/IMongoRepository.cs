@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace H1Store.Catalogo.Data.Providers.MongoDb.Interfaces
 {
-	public interface IMongoRepository<TDocument> 
+	public interface IMongoRepository<TDocument>  
 	{
 		IQueryable<TDocument> AsQueryable();
 

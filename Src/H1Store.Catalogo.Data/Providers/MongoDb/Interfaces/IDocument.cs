@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace H1Store.Catalogo.Data.Providers.MongoDb.Interfaces
-{
+{ 
 	public interface IDocument
 	{
 		[BsonId]
