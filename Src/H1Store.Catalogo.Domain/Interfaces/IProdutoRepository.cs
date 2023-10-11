@@ -14,6 +14,7 @@ namespace H1Store.Catalogo.Domain.Interfaces
 		Task<IEnumerable<Produto>> ObterPorCategoria(int codigo);
 
 		Task Adicionar(Produto produto);
+		Task Desativar(Produto produto);
 		void Atualizar(Produto produto);
 	}
 }

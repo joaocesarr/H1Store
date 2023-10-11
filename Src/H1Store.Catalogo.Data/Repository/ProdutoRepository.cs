@@ -1,7 +1,10 @@
-﻿using H1Store.Catalogo.Data.Providers.MongoDb.Collections;
+﻿using AutoMapper;
+using H1Store.Catalogo.Data.Providers.MongoDb.Collections;
 using H1Store.Catalogo.Data.Providers.MongoDb.Interfaces;
 using H1Store.Catalogo.Domain.Entities;
 using H1Store.Catalogo.Domain.Interfaces;
+using MongoDB.Bson;
+using MongoDB.Driver;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -14,30 +17,19 @@ namespace H1Store.Catalogo.Data.Repository
 	public class ProdutoRepository : IProdutoRepository
 	{
 		private readonly IMongoRepository<ProdutoCollection> _produtoRepository;
-
+		private readonly IMapper _mapper;
 
 		#region - Construtores
-		public ProdutoRepository(IMongoRepository<ProdutoCollection> produtoRepository)
+		public ProdutoRepository(IMongoRepository<ProdutoCollection> produtoRepository, IMapper mapper)
 		{
 			_produtoRepository = produtoRepository;
+			_mapper = mapper;
 		}
-
 		#endregion
-
 		#region - Funções
 		public async Task Adicionar(Produto produto)
-		{
-			ProdutoCollection produtoCollection= new ProdutoCollection();
-			produtoCollection.Descricao = produto.Descricao;
-			produtoCollection.Ativo = produto.Ativo;
-			produtoCollection.DataCadastro = produto.DataCadastro;
-			produtoCollection.Codigo = produto.Codigo;
-			produtoCollection.Nome = produto.Nome;
-			produtoCollection.QuantidadeEstoque	= produto.QuantidadeEstoque;
-			produtoCollection.Valor = produto.Valor;
-			produtoCollection.Imagem = produto.Imagem;
-
-			await	_produtoRepository.InsertOneAsync(produtoCollection);
+		{		
+			await	_produtoRepository.InsertOneAsync(_mapper.Map<ProdutoCollection>(produto));
 		}
 
 		public void Atualizar(Produto produto)
@@ -45,27 +37,34 @@ namespace H1Store.Catalogo.Data.Repository
 			throw new NotImplementedException();
 		}
 
+		public async Task Desativar(Produto produto)
+		{
+			var buscaProduto = _produtoRepository.FilterBy(filter => filter.CodigoId == produto.CodigoId);
+
+			await _produtoRepository.ReplaceOneAsync(_mapper.Map<ProdutoCollection>(buscaProduto));
+		}
+
 		public Task<IEnumerable<Produto>> ObterPorCategoria(int codigo)
 		{
 			throw new NotImplementedException();
 		}
 
-		public Task<Produto> ObterPorId(Guid id)
+		public async Task<Produto> ObterPorId(Guid id)
 		{
-			throw new NotImplementedException();
+
+			var buscaProduto = _produtoRepository.FilterBy(filter =>filter.CodigoId == id);
+
+			var produto = _mapper.Map<Produto>(buscaProduto.FirstOrDefault());
+			
+			return produto;
 		}
 
 		public IEnumerable<Produto> ObterTodos()
 		{
 			var produtoList = _produtoRepository.FilterBy(filter => true);
 
-			List<Produto> lista = new List<Produto>();
-			foreach (var item in produtoList)
-			{
-				lista.Add(new Produto(item.Codigo, item.Nome, item.Descricao, item.Ativo, item.Valor, item.DataCadastro, item.Imagem, item.QuantidadeEstoque));
-			}
+			return _mapper.Map<IEnumerable<Produto>>(produtoList);
 
-			return lista;
 		}
 		#endregion
 

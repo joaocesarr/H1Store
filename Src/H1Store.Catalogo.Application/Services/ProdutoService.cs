@@ -25,16 +25,28 @@ namespace H1Store.Catalogo.Application.Services
 		#endregion
 
 		#region - Funções
-		public void Adicionar(NovoProdutoViewModel novoProdutoViewModel)
+		public async Task Adicionar(NovoProdutoViewModel novoProdutoViewModel)
 		{
 			var novoProduto = _mapper.Map<Produto>(novoProdutoViewModel);
-			_produtoRepository.Adicionar(novoProduto);
+			await _produtoRepository.Adicionar(novoProduto);
 
 		}
 
 		public void Atualizar(ProdutoViewModel produto)
 		{
 			throw new NotImplementedException();
+		}
+
+		public async Task Desativar(Guid id)
+		{
+			var buscaProduto = await _produtoRepository.ObterPorId(id);
+
+			if(buscaProduto == null)  throw new ApplicationException("");
+
+			buscaProduto.Desativar();
+
+			await _produtoRepository.Desativar(buscaProduto);
+
 		}
 
 		public Task<IEnumerable<ProdutoViewModel>> ObterPorCategoria(int codigo)

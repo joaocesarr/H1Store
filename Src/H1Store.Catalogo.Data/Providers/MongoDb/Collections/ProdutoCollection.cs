@@ -12,7 +12,7 @@ namespace H1Store.Catalogo.Data.Providers.MongoDb.Collections
 
 
 		#region 2 - Propriedades
-		public int Codigo { get;  set; }
+		public Guid CodigoId { get; set; }
 		public string Nome { get;  set; }
 		public string Descricao { get;  set; }
 		public bool Ativo { get;  set; }

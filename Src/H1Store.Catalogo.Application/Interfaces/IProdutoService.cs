@@ -13,7 +13,8 @@ namespace H1Store.Catalogo.Application.Interfaces
 		Task<ProdutoViewModel> ObterPorId(Guid id);
 		Task<IEnumerable<ProdutoViewModel>> ObterPorCategoria(int codigo);
 
-		void Adicionar(NovoProdutoViewModel produto);
+		Task Adicionar(NovoProdutoViewModel produto);
 		void Atualizar(ProdutoViewModel produto);
+		Task Desativar(Guid id);
 	}
 }

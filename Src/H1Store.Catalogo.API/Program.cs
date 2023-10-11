@@ -8,6 +8,7 @@ using H1Store.Catalogo.Domain.Interfaces;
 using H1Store.Catalogo.Data.Providers.MongoDb.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.DependencyInjection;
+using H1Store.Catalogo.Data.AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,7 @@ builder.Services.AddSingleton<IMongoDbSettings>(serviceProvider =>
 	   serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value);
 
 builder.Services.AddAutoMapper(typeof(DomainToApplication), typeof(ApplicationToDomain));
+builder.Services.AddAutoMapper(typeof(DomainToCollection), typeof(CollectionToDomain));
 
 builder.Services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
 

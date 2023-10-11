@@ -3,6 +3,7 @@ using H1Store.Catalogo.Application.ViewModels;
 using H1Store.Catalogo.Data.Providers.MongoDb.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Xml.Linq;
 
 namespace H1Store.Catalogo.API.Controllers
 {
@@ -16,16 +17,26 @@ namespace H1Store.Catalogo.API.Controllers
 			_produtoService = produtoService;
 		}
 
-		[HttpPost(Name = "Adicionar")]
-		public IActionResult Post(NovoProdutoViewModel novoProdutoViewModel)
+		[HttpPost]
+		[Route("Adicionar")]
+		public async Task<IActionResult> Post(NovoProdutoViewModel novoProdutoViewModel)
 		{
-			_produtoService.Adicionar(novoProdutoViewModel);
+			await _produtoService.Adicionar(novoProdutoViewModel);
 
 			return Ok();
 		}
 
+		[HttpPut]
+		[Route("Desativar/{id}")]
+		public async Task<IActionResult> Put(Guid id)
+		{
+			await _produtoService.Desativar(id);
 
-		[HttpGet(Name = "ObterTodos")]
+			return Ok("Produto desativado com sucesso");
+		}
+
+		[HttpGet]
+		[Route("ObterTodos")]
 		public IActionResult Get()
 		{
 			return Ok(_produtoService.ObterTodos());
