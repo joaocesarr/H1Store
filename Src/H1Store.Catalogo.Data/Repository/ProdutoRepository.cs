@@ -41,7 +41,11 @@ namespace H1Store.Catalogo.Data.Repository
 		{
 			var buscaProduto = _produtoRepository.FilterBy(filter => filter.CodigoId == produto.CodigoId);
 
-			await _produtoRepository.ReplaceOneAsync(_mapper.Map<ProdutoCollection>(buscaProduto));
+			var produtoDesativar = buscaProduto.FirstOrDefault();
+			
+			produtoDesativar.Ativo = produto.Ativo;
+
+			await _produtoRepository.ReplaceOneAsync(_mapper.Map<ProdutoCollection>(produtoDesativar));
 		}
 
 		public Task<IEnumerable<Produto>> ObterPorCategoria(int codigo)
