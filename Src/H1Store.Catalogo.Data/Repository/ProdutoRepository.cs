@@ -39,13 +39,16 @@ namespace H1Store.Catalogo.Data.Repository
 
 		public async Task Desativar(Produto produto)
 		{
+
 			var buscaProduto = _produtoRepository.FilterBy(filter => filter.CodigoId == produto.CodigoId);
 
-			var produtoDesativar = buscaProduto.FirstOrDefault();
-			
-			produtoDesativar.Ativo = produto.Ativo;
+			if (buscaProduto == null) throw new ApplicationException("Não é possível desativar um produto que não existe");
 
-			await _produtoRepository.ReplaceOneAsync(_mapper.Map<ProdutoCollection>(produtoDesativar));
+			var produtoCollection = _mapper.Map<ProdutoCollection>(produto);
+
+			produtoCollection.Id = buscaProduto.FirstOrDefault().Id;
+			
+			await _produtoRepository.ReplaceOneAsync(produtoCollection);
 		}
 
 		public Task<IEnumerable<Produto>> ObterPorCategoria(int codigo)

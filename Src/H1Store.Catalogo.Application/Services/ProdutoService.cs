@@ -42,7 +42,7 @@ namespace H1Store.Catalogo.Application.Services
 			var buscaProduto = await _produtoRepository.ObterPorId(id);
 
 			if(buscaProduto == null)  throw new ApplicationException("Não é possível desativar um produto que não existe!");
-
+			
 			buscaProduto.Desativar();
 
 			await _produtoRepository.Desativar(buscaProduto);
