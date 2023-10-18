@@ -13,6 +13,7 @@ namespace H1Store.Catalogo.Data.Providers.MongoDb.Collections
 
 		#region 2 - Propriedades
 		public Guid CodigoId { get; set; }
+		public Guid CategoriaId { get; set; }
 		public string Nome { get;  set; }
 		public string Descricao { get;  set; }
 		public bool Ativo { get;  set; }

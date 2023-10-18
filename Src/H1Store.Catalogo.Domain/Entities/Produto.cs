@@ -47,6 +47,7 @@ namespace H1Store.Catalogo.Domain.Entities
 			public DateTime DataCadastro { get; private set; }
 			public string Imagem { get; private set; }
 			public int QuantidadeEstoque { get; private set; }
+			public Guid CategoriaID { get; private set; }
 
 		#endregion
 
@@ -57,6 +58,7 @@ namespace H1Store.Catalogo.Domain.Entities
 		public void Desativar() => Ativo = false;
 
 		public void AlterarDescricao(string descricao) => Descricao = descricao;
+		public void AlterarCategoria(Guid categoriaID) => CategoriaID = categoriaID;
 
 		public void DebitarEstoque(int quantidade)
 		{

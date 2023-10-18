@@ -28,6 +28,9 @@ namespace H1Store.Catalogo.Application.Services
 		public async Task Adicionar(NovoProdutoViewModel novoProdutoViewModel)
 		{
 			var novoProduto = _mapper.Map<Produto>(novoProdutoViewModel);
+
+			Produto p = new Produto(novoProdutoViewModel.Descricao, novoProdutoViewModel.Descricao, novoProdutoViewModel.Ativo, novoProdutoViewModel.Valor, novoProdutoViewModel.DataCadastro, novoProdutoViewModel.Imagem, novoProdutoViewModel.QuantidadeEstoque);
+
 			await _produtoRepository.Adicionar(novoProduto);
 
 		}

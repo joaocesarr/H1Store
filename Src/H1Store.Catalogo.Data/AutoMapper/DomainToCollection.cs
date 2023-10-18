@@ -15,6 +15,7 @@ namespace H1Store.Catalogo.Data.AutoMapper
 		public DomainToCollection()
 		{
 			CreateMap<Produto, ProdutoCollection>();
+			CreateMap<Categoria, CategoriaCollection>();
 		}
 	}
 }
